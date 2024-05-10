@@ -1,0 +1,27 @@
+import boto3
+import streamlit as st
+
+# ... (rest of the code for upload and list_bucket_objects functions)
+
+# Streamlit app layout
+st.title("S3 File Upload and Refresh App")
+
+# File upload section
+uploaded_file = st.file_uploader("Choose a file to upload")
+if uploaded_file is not None:
+    upload_file(uploaded_file)
+
+# Refresh button section (existing)
+if st.button("Refresh S3 Bucket"):
+    list_bucket_objects()
+
+# Hidden button for full refresh
+if st.button("", key="hidden_refresh"):
+    st.experimental_rerun()  # Requires Streamlit v1.1 or later
+
+# Display uploaded filename (optional)
+if uploaded_file is not None:
+    st.write(f"Uploaded file: {uploaded_file.name}")
+
+# Display current S3 bucket contents (after refresh)
+list_bucket_objects()
